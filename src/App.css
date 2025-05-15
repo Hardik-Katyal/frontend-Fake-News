@@ -1,38 +1,354 @@
-.App {
+/* Base Styles */
+:root {
+  --primary: #4361ee;
+  --primary-dark: #3a0ca3;
+  --primary-light: #4895ef;
+  --secondary: #3f37c9;
+  --success: #27ae60;
+  --danger: #e74c3c;
+  --dark: #212529;
+  --light: #f8f9fa;
+  --gray: #6c757d;
+  --light-gray: #e9ecef;
+  --white: #ffffff;
+}
+
+
+
+/* Gradient Background */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(45deg, #816dff, #bab2ed, #816dff);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  background-attachment: fixed;
+  color: var(--dark);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Changed from center for better mobile layout */
+  padding: 1rem;
+}
+
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 100%;
+  }
+  50% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+/* Container */
+.container {
+  width: 100vh;
+  max-width: 100vh; /* Changed from 1200px to make it more compact */
+  min-width: 600px; /* Added minimum width */
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* Title */
+.main-title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--primary-dark);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Dropdown */
+.dropdown-container {
+  margin-bottom: 2rem;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.dropdown-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-right: 1rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.dropdown {
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--light-gray);
+  border-radius: 8px;
+  background-color: var(--white);
+  transition: all 0.3s ease;
+}
+
+.dropdown:focus {
+  border-color: var(--primary-light);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+}
+
+/* Content Wrapper */
+.content-wrapper {
+  display: block;
+}
+
+/* Form Styles */
+.prediction-form {
+  width: 100%;
+  max-width: 100%;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  backdrop-filter: blur(2px);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  color: var(--dark);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--light-gray);
+  border-radius: 8px;
+  background-color: var(--white);
+  transition: all 0.3s ease;
+}
+
+.form-group textarea {
+  min-height: 200px;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--primary-light);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+}
+
+/* Button */
+button[type="submit"] {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(67, 97, 238, 0.2);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+/* Results container styles */
+.result-container {
+  margin-top: 2rem;
+  border-top: 2px solid #eee;
+  padding-top: 2rem;
+}
+
+.result-section {
+  background-color: rgba(248, 249, 250, 0.8);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.result-section h3 {
+  margin-top: 0;
+  color: var(--dark);
+}
+
+.prediction-section {
+  background-color: rgba(248, 249, 250, 0.8);
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Prediction Colors */
+.prediction-fake {
+  color: var(--danger);
+}
+
+.prediction-real {
+  color: var(--success);
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--white);
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Highlighted Text */
+mark {
+  background-color: #fff3bf;
+  padding: 0.1em 0.2em;
+  border-radius: 0.2em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1.5rem;
+    width: 95%;
+  }
+  
+  .main-title {
+    font-size: 2rem;
+  }
+  
+  .dropdown-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .dropdown-label {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* Remove the side-by-side layout for larger screens */
+@media (min-width: 992px) {
+  .content-wrapper {
+    flex-direction: column;
+  }
+  
+  .prediction-form,
+  .result {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* Highlight styles */
+mark.suspicious {
+  background-color: #fff3bf;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+mark.inaccurate {
+  background-color: #ffcccc;
+  padding: 2px 4px;
+  border-radius: 3px;
+  text-decoration: line-through;
+}
+
+/* Gemini verification button */
+.gemini-verify-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #4285f4;
   color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.App-link {
-  color: #61dafb;
+.gemini-verify-btn:hover {
+  background-color: #357abd;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Related articles */
+.related-articles {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.related-articles h3 {
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+.related-articles ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.related-articles li {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.related-articles a {
+  color: #4361ee;
+  text-decoration: none;
+}
+
+.related-articles a:hover {
+  text-decoration: underline;
+}
+
+/* Explanation Section */
+.explanation-box {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #4361ee;
+}
+
+.explanation-line {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  background: white;
+  border-radius: 4px;
+}
+
+.cooldown-timer {
+  display: inline-block;
+  margin-left: 1rem;
+  color: #ffffff; 
+  font-size: 0.9rem;
 }
